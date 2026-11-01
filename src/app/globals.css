@@ -1,0 +1,108 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Tokens do design "mesa de pesquisa em papel quente": canvas claro e
+ * quente, paleta monocromática e um único acento verde-azulado (teal),
+ * usado só em estados ativos/selecionados e no brilho da busca.
+ */
+:root {
+  --radius: 0.75rem; /* 12px: inputs e botões preenchidos */
+
+  --background: #faf8f5; /* Parchment */
+  --foreground: #27251e; /* Ink */
+  --card: #fdfbfa; /* Soft Paper */
+  --card-foreground: #27251e;
+  --popover: #fdfbfa;
+  --popover-foreground: #27251e;
+  --primary: #27251e; /* Ink: botão preenchido */
+  --primary-foreground: #faf8f5;
+  --secondary: #f1eee9;
+  --secondary-foreground: #27251e;
+  --muted: #f1eee9;
+  --muted-foreground: #72706b; /* Graphite */
+  --accent: #016a71; /* Deep Teal */
+  --accent-foreground: #ffffff;
+  --destructive: #b42318;
+  --border: #d1d1cd; /* Warm Mist */
+  --input: #d1d1cd;
+  --ring: rgba(1, 106, 113, 0.4);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: var(--radius);
+  --radius-xl: 16px;
+
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+@theme {
+  --color-parchment: #faf8f5;
+  --color-soft-paper: #fdfbfa;
+  --color-sidebar: #f3f0eb;
+  --color-warm-mist: #d1d1cd;
+  --color-ash: #92918b;
+  --color-graphite: #72706b;
+  --color-ink: #27251e;
+  --color-teal: #016a71;
+
+  --shadow-subtle: 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring;
+  }
+  html {
+    color-scheme: light;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background font-sans text-ink;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  ::selection {
+    background: rgba(1, 106, 113, 0.18);
+  }
+}
+
+@layer components {
+  /* Rótulo pequeno (seções, metadados) */
+  .caption {
+    @apply text-xs leading-[1.43] font-medium text-graphite;
+  }
+  /* Título principal: sans, peso 500 no máximo */
+  .heading {
+    @apply font-medium tracking-[-0.02em] text-ink;
+  }
+  /* Brilho verde-azulado do campo de busca */
+  .teal-glow {
+    box-shadow:
+      0 0 0 1px rgba(1, 106, 113, 0.4),
+      0 0 0 4px rgba(1, 106, 113, 0.08);
+  }
+}
