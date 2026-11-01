@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Seu caderno pessoal de receitas.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0f1011",
-    theme_color: "#0f1011",
+    background_color: "#faf8f5",
+    theme_color: "#faf8f5",
     lang: "pt-BR",
     icons: [{ src: "/icon.svg", sizes: "any", type: "image/svg+xml" }],
   };

@@ -18,8 +18,11 @@ function hrefWith(
 }
 
 const chip =
-  "label-mono inline-flex h-9 shrink-0 items-center gap-2 rounded-full border px-4 transition-colors duration-200";
+  "inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-3 text-sm transition-colors duration-150";
+const on = "bg-teal text-white";
+const off = "border border-warm-mist text-ink hover:border-ash";
 
+/** Filtros em "pílulas" (usados no celular; no desktop ficam na barra lateral). */
 export function CategoryFilter({
   current,
   counts,
@@ -32,27 +35,17 @@ export function CategoryFilter({
   );
 
   return (
-    <div className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
-      <div className="flex w-max gap-2 sm:w-auto sm:flex-wrap sm:justify-center">
+    <div className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex w-max gap-2">
         <Link
           href={hrefWith(current, { categoria: undefined, favoritas: false })}
-          className={cn(
-            chip,
-            !current.categoria && !current.favoritas
-              ? "border-white bg-white text-black"
-              : "border-white/15 bg-white/[0.06] text-white/80 hover:bg-white/10"
-          )}
+          className={cn(chip, !current.categoria && !current.favoritas ? on : off)}
         >
           Todas
         </Link>
         <Link
           href={hrefWith(current, { favoritas: !current.favoritas })}
-          className={cn(
-            chip,
-            current.favoritas
-              ? "border-white bg-white text-black"
-              : "border-white/15 bg-white/[0.06] text-white/80 hover:bg-white/10"
-          )}
+          className={cn(chip, current.favoritas ? on : off)}
         >
           <Heart className="size-3.5" aria-hidden /> Favoritas
         </Link>
@@ -61,18 +54,11 @@ export function CategoryFilter({
           return (
             <Link
               key={c.slug}
-              href={hrefWith(current, {
-                categoria: active ? undefined : c.slug,
-              })}
-              className={cn(
-                chip,
-                active
-                  ? "border-white bg-white text-black"
-                  : "border-white/15 bg-white/[0.06] text-white/80 hover:bg-white/10"
-              )}
+              href={hrefWith(current, { categoria: active ? undefined : c.slug })}
+              className={cn(chip, active ? on : off)}
             >
               {c.label}
-              <span className={active ? "text-black/50" : "text-fog"}>
+              <span className={active ? "text-white/75" : "text-ash"}>
                 {counts[c.slug] ?? 0}
               </span>
             </Link>

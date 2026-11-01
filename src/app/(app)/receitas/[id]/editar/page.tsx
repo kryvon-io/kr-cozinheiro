@@ -14,10 +14,10 @@ export default async function EditRecipePage({
   if (!recipe) notFound();
 
   return (
-    <main className="mx-auto w-full max-w-[960px] px-4 sm:px-6">
-      <header className="reveal pt-12 pb-10 sm:pt-16">
-        <span className="label-mono text-ash">Editar receita</span>
-        <h1 className="display mt-5 text-[44px] text-balance sm:text-[64px]">
+    <main>
+      <header className="pb-6">
+        <p className="caption">Editar receita</p>
+        <h1 className="heading mt-1 text-3xl leading-tight text-balance">
           {recipe.title}
         </h1>
       </header>

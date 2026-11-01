@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { ArrowRight, SearchX } from "lucide-react";
+import { ArrowRight, SearchX, Smartphone } from "lucide-react";
 
 import { CategoryFilter } from "@/components/category-filter";
 import { RecipeCard } from "@/components/recipe-card";
@@ -25,24 +25,23 @@ export default async function HomePage({ searchParams }: PageProps<"/">) {
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
   const filtering = Boolean(q || categoria || favoritas);
 
-  return (
-    <main className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
-      <section className="reveal flex flex-col items-center pt-14 pb-10 text-center sm:pt-20 sm:pb-14">
-        <span className="label-mono inline-flex rounded-full border border-white/15 bg-white/[0.08] px-5 py-2.5 text-white/90">
-          {total === 0
-            ? "Seu caderno está vazio"
-            : `${total} ${total === 1 ? "receita salva" : "receitas salvas"}`}
-        </span>
-        <h1 className="display mt-7 max-w-[900px] text-[52px] sm:text-[80px] lg:text-[96px]">
-          Tudo o que você <em className="italic">cozinha</em>, num só lugar
-        </h1>
-        <p className="mt-6 max-w-[560px] text-[17px] leading-relaxed font-light text-ash sm:text-lg">
-          Guarde suas receitas, encontre pelo nome ou por um ingrediente e
-          consulte quando quiser, do celular ou do computador.
-        </p>
+  const title = categoria
+    ? getCategory(categoria).label
+    : favoritas
+      ? "Favoritas"
+      : "O que vamos cozinhar hoje?";
 
+  return (
+    <main>
+      <section className="flex flex-col items-center pt-4 pb-8 text-center sm:pt-10">
+        <h1 className="heading text-[28px] leading-tight sm:text-4xl">{title}</h1>
+        <p className="mt-2 text-sm text-graphite">
+          {total === 0
+            ? "Seu caderno ainda está vazio."
+            : `${total} ${total === 1 ? "receita salva" : "receitas salvas"} no seu caderno`}
+        </p>
         {total > 0 && (
-          <div className="mt-10 w-full max-w-[640px]">
+          <div className="mt-6 w-full max-w-[640px]">
             <Suspense>
               <SearchBar />
             </Suspense>
@@ -51,7 +50,7 @@ export default async function HomePage({ searchParams }: PageProps<"/">) {
       </section>
 
       {total > 0 && (
-        <div className="mb-10">
+        <div className="mb-6 lg:hidden">
           <CategoryFilter current={{ q, categoria, favoritas }} counts={counts} />
         </div>
       )}
@@ -59,29 +58,26 @@ export default async function HomePage({ searchParams }: PageProps<"/">) {
       {total === 0 ? (
         <EmptyState />
       ) : recipes.length === 0 ? (
-        <div className="flex flex-col items-center gap-5 rounded-[30px] border border-white/10 px-6 py-20 text-center">
-          <SearchX className="size-8 text-ash" strokeWidth={1.25} />
-          <p className="font-serif text-3xl font-light text-cloud">
-            Nada encontrado
-          </p>
-          <p className="max-w-sm text-ash">
+        <div className="flex flex-col items-center gap-3 rounded-xl border border-warm-mist px-6 py-14 text-center">
+          <SearchX className="size-6 text-graphite" strokeWidth={1.5} />
+          <p className="text-base font-medium">Nada encontrado</p>
+          <p className="max-w-sm text-sm text-graphite">
             {q ? <>Nenhuma receita com “{q}”</> : "Nenhuma receita"}
             {categoria && <> em {getCategory(categoria).label}</>}
             {favoritas && <> entre as favoritas</>}.
           </p>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" size="sm" className="mt-2">
             <Link href="/">Limpar filtros</Link>
           </Button>
         </div>
       ) : (
         <section aria-label="Receitas">
           {filtering && (
-            <p className="label-mono mb-6 text-ash">
-              {recipes.length}{" "}
-              {recipes.length === 1 ? "resultado" : "resultados"}
+            <p className="caption mb-3">
+              {recipes.length} {recipes.length === 1 ? "resultado" : "resultados"}
             </p>
           )}
-          <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid items-start gap-3 sm:grid-cols-2">
             {recipes.map((r) => (
               <RecipeCard key={r.id} recipe={r} />
             ))}
@@ -94,29 +90,28 @@ export default async function HomePage({ searchParams }: PageProps<"/">) {
 
 function EmptyState() {
   return (
-    <section className="grid gap-3 pb-10 md:grid-cols-3">
-      <div className="flex flex-col justify-between gap-12 rounded-[30px] bg-iris-gleam p-8 text-white md:col-span-2">
-        <span className="label-mono text-white/80">Primeiro passo</span>
-        <div>
-          <h2 className="font-serif text-[38px] leading-[0.95] font-light sm:text-5xl">
-            Salve sua primeira receita
-          </h2>
-          <p className="mt-4 max-w-md text-white/85">
-            Nome, ingredientes, modo de preparo e, se quiser, uma foto do
-            prato pronto.
-          </p>
-        </div>
-        <Button asChild className="self-start">
-          <Link href="/receitas/nova">
-            Nova receita <ArrowRight />
-          </Link>
-        </Button>
-      </div>
-      <div className="flex flex-col justify-between gap-12 rounded-[30px] bg-silver p-8 text-black">
-        <span className="label-mono text-black/60">Dica</span>
-        <p className="font-serif text-[26px] leading-[1.1] font-light">
-          No celular, use “Adicionar à tela de início” para abrir o caderno
-          como um app.
+    <section className="mx-auto grid max-w-[640px] gap-3 sm:grid-cols-2">
+      <Link
+        href="/receitas/nova"
+        className="group flex flex-col gap-2 rounded-xl bg-soft-paper p-4 shadow-subtle ring-1 ring-transparent transition-[box-shadow] hover:ring-warm-mist"
+      >
+        <span className="inline-flex w-fit rounded-full bg-teal px-2 py-0.5 text-[11px] font-medium text-white">
+          Comece aqui
+        </span>
+        <p className="text-base font-medium">Salve sua primeira receita</p>
+        <p className="text-sm text-graphite">
+          Nome, ingredientes, modo de preparo e, se quiser, uma foto.
+        </p>
+        <span className="mt-1 inline-flex items-center gap-1 text-sm text-ink">
+          Nova receita <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+        </span>
+      </Link>
+      <div className="flex flex-col gap-2 rounded-xl bg-soft-paper p-4 shadow-subtle">
+        <Smartphone className="size-4 text-ink" aria-hidden />
+        <p className="text-base font-medium">Use como app</p>
+        <p className="text-sm text-graphite">
+          No celular, toque em “Adicionar à tela de início” para abrir o
+          caderno direto.
         </p>
       </div>
     </section>

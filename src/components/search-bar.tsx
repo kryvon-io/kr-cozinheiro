@@ -32,9 +32,9 @@ export function SearchBar() {
         clearTimeout(timer.current);
         push(value);
       }}
-      className="flex h-14 w-full items-center gap-2 rounded-lg border border-white/10 bg-black py-2 pr-2 pl-5 transition-[border-color] duration-200 focus-within:border-white/30"
+      className="teal-glow flex w-full items-center gap-2 rounded-lg bg-parchment py-2 pr-2 pl-4"
     >
-      <Search className="size-4 shrink-0 text-ash" aria-hidden />
+      <Search className="size-4 shrink-0 text-graphite" aria-hidden />
       <input
         type="search"
         name="q"
@@ -47,7 +47,7 @@ export function SearchBar() {
         }}
         placeholder="Buscar por nome ou ingrediente…"
         aria-label="Buscar receitas"
-        className="h-full min-w-0 flex-1 bg-transparent text-base text-cloud outline-none placeholder:text-ash [&::-webkit-search-cancel-button]:hidden"
+        className="h-10 min-w-0 flex-1 bg-transparent text-base text-ink outline-none placeholder:text-graphite [&::-webkit-search-cancel-button]:hidden"
       />
       {value && (
         <button
@@ -56,7 +56,7 @@ export function SearchBar() {
             setValue("");
             push("");
           }}
-          className="inline-flex size-8 items-center justify-center rounded-full text-ash transition-colors hover:text-white"
+          className="inline-flex size-8 items-center justify-center rounded-sm text-graphite transition-colors hover:text-ink"
           aria-label="Limpar busca"
         >
           <X className="size-4" />
@@ -64,7 +64,7 @@ export function SearchBar() {
       )}
       <button
         type="submit"
-        className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white transition-colors duration-200 hover:bg-white/30"
+        className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-ink text-parchment transition-colors duration-150 hover:bg-ink/85"
         aria-label="Buscar"
       >
         {pending ? (

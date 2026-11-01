@@ -34,7 +34,7 @@ function FieldError({ message }: { message?: string }) {
 }
 
 function Hint({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm leading-relaxed text-fog">{children}</p>;
+  return <p className="text-xs leading-[1.43] text-graphite">{children}</p>;
 }
 
 function Section({
@@ -45,11 +45,9 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="grid gap-6 border-t border-white/10 py-10 md:grid-cols-[220px_1fr] md:gap-10">
-      <h2 className="font-serif text-[28px] leading-none font-light text-cloud">
-        {title}
-      </h2>
-      <div className="space-y-6">{children}</div>
+    <section className="space-y-5 rounded-xl bg-soft-paper p-4 shadow-subtle sm:p-6">
+      <h2 className="text-base font-medium text-ink">{title}</h2>
+      <div className="space-y-5">{children}</div>
     </section>
   );
 }
@@ -65,11 +63,11 @@ export function RecipeForm({
   const e = state?.errors ?? {};
 
   return (
-    <form action={action} noValidate>
+    <form action={action} noValidate className="space-y-3">
       {initial.id && <input type="hidden" name="id" value={initial.id} />}
 
       <Section title="Sobre">
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           <Label htmlFor="title">Nome da receita</Label>
           <Input
             id="title"
@@ -83,7 +81,7 @@ export function RecipeForm({
           <FieldError message={e.title} />
         </div>
 
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           <Label htmlFor="description">Descrição curta</Label>
           <Textarea
             id="description"
@@ -97,8 +95,8 @@ export function RecipeForm({
           <FieldError message={e.description} />
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          <div className="space-y-2.5">
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div className="space-y-2">
             <Label htmlFor="category">Categoria</Label>
             <NativeSelect
               id="category"
@@ -114,7 +112,7 @@ export function RecipeForm({
             </NativeSelect>
             <FieldError message={e.category} />
           </div>
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             <Label htmlFor="difficulty">Dificuldade</Label>
             <NativeSelect
               id="difficulty"
@@ -130,7 +128,7 @@ export function RecipeForm({
             </NativeSelect>
             <FieldError message={e.difficulty} />
           </div>
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             <Label htmlFor="totalTimeMinutes">Tempo total (minutos)</Label>
             <Input
               id="totalTimeMinutes"
@@ -144,7 +142,7 @@ export function RecipeForm({
             />
             <FieldError message={e.totalTimeMinutes} />
           </div>
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             <Label htmlFor="servings">Rende (porções)</Label>
             <Input
               id="servings"
@@ -166,13 +164,13 @@ export function RecipeForm({
       </Section>
 
       <Section title="Ingredientes">
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           <Label htmlFor="ingredients">Um por linha</Label>
           <Textarea
             id="ingredients"
             name="ingredients"
             defaultValue={initial.ingredients}
-            className="min-h-48 font-mono text-[14px] md:text-[14px]"
+            className="min-h-48"
             placeholder={"Massa:\n3 cenouras médias\n3 ovos\n1 xícara de óleo\n\nCobertura:\n1 colher de manteiga"}
             aria-invalid={!!e.ingredients}
           />
@@ -185,7 +183,7 @@ export function RecipeForm({
       </Section>
 
       <Section title="Modo de preparo">
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           <Label htmlFor="steps">Um passo por linha</Label>
           <Textarea
             id="steps"
@@ -201,7 +199,7 @@ export function RecipeForm({
       </Section>
 
       <Section title="Extras">
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           <Label htmlFor="notes">Observações</Label>
           <Textarea
             id="notes"
@@ -213,7 +211,7 @@ export function RecipeForm({
           />
           <FieldError message={e.notes} />
         </div>
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           <Label htmlFor="source">Fonte</Label>
           <Input
             id="source"
@@ -227,7 +225,7 @@ export function RecipeForm({
         </div>
       </Section>
 
-      <div className="sticky bottom-0 z-30 -mx-4 border-t border-white/10 bg-obsidian/85 px-4 py-4 backdrop-blur-2xl sm:mx-0 sm:rounded-t-[16px] sm:px-6">
+      <div className="sticky bottom-0 z-20 -mx-4 border-t border-warm-mist/70 bg-parchment px-4 py-3 sm:mx-0 sm:px-0">
         <div className="flex items-center justify-between gap-3">
           <p role="status" className="text-sm text-destructive">
             {state?.message}

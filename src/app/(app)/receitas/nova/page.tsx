@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: "Nova receita" };
 
 export default function NewRecipePage() {
   return (
-    <main className="mx-auto w-full max-w-[960px] px-4 sm:px-6">
-      <header className="reveal pt-12 pb-10 sm:pt-16">
-        <span className="label-mono text-ash">Nova receita</span>
-        <h1 className="display mt-5 text-[48px] sm:text-[72px]">
-          O que vamos <em className="italic">guardar</em> hoje?
+    <main>
+      <header className="pb-6">
+        <p className="caption">Nova receita</p>
+        <h1 className="heading mt-1 text-3xl leading-tight">
+          O que vamos guardar hoje?
         </h1>
       </header>
       <RecipeForm

@@ -1,24 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Newsreader, Roboto_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import "./globals.css";
 
-const serif = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  weight: ["300", "400"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
 const sans = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const mono = Roboto_Mono({
-  variable: "--font-roboto-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
@@ -31,22 +17,19 @@ export const metadata: Metadata = {
   },
   description: "Seu caderno pessoal de receitas.",
   applicationName: "KR Cozinheiro",
-  appleWebApp: { capable: true, title: "Cozinheiro", statusBarStyle: "black" },
+  appleWebApp: { capable: true, title: "Cozinheiro", statusBarStyle: "default" },
   robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f1011",
-  colorScheme: "dark",
+  themeColor: "#faf8f5",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="pt-BR"
-      className={`${serif.variable} ${sans.variable} ${mono.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col">{children}</body>
+    <html lang="pt-BR" className={`${sans.variable} h-full antialiased`}>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

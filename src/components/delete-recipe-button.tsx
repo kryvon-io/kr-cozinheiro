@@ -23,7 +23,7 @@ export function DeleteRecipeButton({ id, title }: { id: string; title: string })
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" className="text-ash hover:text-destructive">
+        <Button variant="ghost" className="hover:text-destructive">
           <Trash2 /> Excluir
         </Button>
       </AlertDialogTrigger>

@@ -12,7 +12,7 @@ Caderno pessoal de receitas: salve, busque e consulte suas receitas do celular o
 - Página da receita com lista de ingredientes que dá para ir marcando enquanto cozinha.
 - Linhas terminadas com `:` (ex.: `Cobertura:`) viram subtítulos nos ingredientes e no preparo.
 - Fotos são redimensionadas e comprimidas no navegador (máx. 1400 px, WebP/JPEG) e guardadas no próprio banco.
-- Layout responsivo, tema escuro, e pode ser instalado na tela de início do celular (manifest PWA).
+- Layout responsivo (barra lateral no computador, barra superior no celular), visual claro "papel" com um único acento verde-azulado, e pode ser instalado na tela de início do celular (manifest PWA).
 
 ## Variáveis de ambiente
 

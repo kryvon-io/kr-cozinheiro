@@ -14,10 +14,10 @@ export function LoginForm({ from }: { from: string }) {
   return (
     <form
       action={action}
-      className="space-y-5 rounded-[16px] border border-white/10 bg-[#141517]/90 p-6 backdrop-blur-xl sm:p-8"
+      className="space-y-4 rounded-xl bg-soft-paper p-5 shadow-subtle sm:p-6"
     >
       <input type="hidden" name="de" value={from} />
-      <div className="space-y-2.5">
+      <div className="space-y-2">
         <Label htmlFor="email">E-mail</Label>
         <Input
           id="email"
@@ -30,7 +30,7 @@ export function LoginForm({ from }: { from: string }) {
           placeholder="voce@exemplo.com"
         />
       </div>
-      <div className="space-y-2.5">
+      <div className="space-y-2">
         <Label htmlFor="password">Senha</Label>
         <Input
           id="password"

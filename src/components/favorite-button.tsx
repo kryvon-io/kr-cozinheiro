@@ -20,7 +20,7 @@ export function FavoriteButton({
   return (
     <Button
       type="button"
-      variant="glass"
+      variant={optimistic ? "active" : "outline"}
       aria-pressed={optimistic}
       onClick={() =>
         startTransition(async () => {
@@ -29,7 +29,7 @@ export function FavoriteButton({
         })
       }
     >
-      <Heart className={cn(optimistic && "fill-white")} />
+      <Heart className={cn(optimistic && "fill-current")} />
       {optimistic ? "Favorita" : "Favoritar"}
     </Button>
   );

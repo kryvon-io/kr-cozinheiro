@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, Pencil } from "lucide-react";
 
-import { CategoryTile } from "@/components/category-tile";
 import { DeleteRecipeButton } from "@/components/delete-recipe-button";
 import { FavoriteButton } from "@/components/favorite-button";
 import { IngredientList } from "@/components/ingredient-list";
@@ -26,6 +25,7 @@ export default async function RecipePage({ params }: PageProps<"/receitas/[id]">
   if (!recipe) notFound();
 
   const cat = getCategory(recipe.category);
+  const CategoryIcon = cat.icon;
   const stats = [
     { label: "Tempo", value: formatTime(recipe.totalTimeMinutes) },
     {
@@ -49,11 +49,11 @@ export default async function RecipePage({ params }: PageProps<"/receitas/[id]">
   const sourceHost = hostOf(recipe.source);
 
   return (
-    <main className="mx-auto w-full max-w-[1200px] px-4 pt-8 sm:px-6 sm:pt-10">
+    <main>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Link
           href="/"
-          className="label-mono inline-flex items-center gap-2 rounded-lg py-2 text-ash transition-colors hover:text-white"
+          className="inline-flex items-center gap-1.5 rounded-sm py-1 text-sm text-graphite transition-colors hover:text-ink"
         >
           <ArrowLeft className="size-4" /> Receitas
         </Link>
@@ -68,105 +68,111 @@ export default async function RecipePage({ params }: PageProps<"/receitas/[id]">
         </div>
       </div>
 
-      <header className="reveal mx-auto max-w-[900px] pt-12 pb-10 text-center sm:pt-16">
-        <span className="label-mono inline-flex rounded-full border border-white/15 bg-white/[0.08] px-5 py-2.5 text-white/90">
+      <header className="pt-8 pb-6">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-warm-mist px-3 py-1 text-sm text-ink">
+          <CategoryIcon className="size-3.5" aria-hidden />
           {cat.label}
         </span>
-        <h1 className="display mt-7 text-[46px] text-balance sm:text-[72px] lg:text-[84px]">
+        <h1 className="heading mt-4 text-3xl leading-tight text-balance sm:text-[40px]">
           {recipe.title}
         </h1>
         {recipe.description && (
-          <p className="mx-auto mt-6 max-w-[620px] text-[17px] leading-relaxed font-light text-ash sm:text-lg">
+          <p className="mt-3 max-w-[640px] text-base text-graphite">
             {recipe.description}
           </p>
         )}
       </header>
 
       {stats.length > 0 && (
-        <dl className="mx-auto mb-10 grid max-w-[900px] grid-cols-2 gap-px overflow-hidden rounded-[16px] border border-white/10 bg-white/10 sm:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="bg-obsidian px-5 py-5 text-center">
-              <dt className="label-mono text-fog">{s.label}</dt>
-              <dd className="mt-3 font-serif text-2xl font-light text-cloud">
-                {s.value}
-              </dd>
+        <dl className="mb-6 grid grid-cols-2 overflow-hidden rounded-xl border border-warm-mist sm:grid-cols-4">
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              className={[
+                "px-4 py-3",
+                i % 2 === 1 ? "border-l border-warm-mist" : "",
+                i >= 2 ? "border-t border-warm-mist sm:border-t-0" : "",
+                i === 2 ? "sm:border-l" : "",
+              ].join(" ")}
+            >
+              <dt className="caption">{s.label}</dt>
+              <dd className="mt-0.5 text-base font-medium text-ink">{s.value}</dd>
             </div>
           ))}
         </dl>
       )}
 
-      <div className="mb-14 aspect-[16/10] overflow-hidden rounded-[30px] bg-graphite sm:aspect-[21/9]">
-        {recipe.hasImage ? (
+      {recipe.hasImage && (
+        <div className="mb-6 aspect-[16/9] overflow-hidden rounded-xl bg-muted">
           <RecipeImage
             id={recipe.id}
             version={recipe.updatedAt}
             alt={recipe.title}
             priority
           />
-        ) : (
-          <CategoryTile category={recipe.category} size="lg" />
-        )}
-      </div>
+        </div>
+      )}
 
-      <div className="grid gap-12 lg:grid-cols-[380px_1fr] lg:gap-16">
-        <section aria-labelledby="ingredientes" className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-[16px] bg-[#17181a] p-6 sm:p-8">
-            <h2 id="ingredientes" className="font-serif text-[34px] leading-none font-light text-cloud">
-              Ingredientes
-            </h2>
-            <p className="label-mono mt-3 mb-5 text-fog">Toque para marcar</p>
-            <IngredientList items={recipe.ingredients} />
-          </div>
+      <div className="grid gap-3 md:grid-cols-[300px_1fr]">
+        <section
+          aria-labelledby="ingredientes"
+          className="rounded-xl bg-soft-paper p-4 shadow-subtle sm:p-5 md:sticky md:top-6 md:self-start"
+        >
+          <h2 id="ingredientes" className="text-base font-medium">
+            Ingredientes
+          </h2>
+          <p className="mt-0.5 mb-3 text-xs text-graphite">Toque para marcar</p>
+          <IngredientList items={recipe.ingredients} />
         </section>
 
-        <section aria-labelledby="preparo">
-          <h2 id="preparo" className="font-serif text-[34px] leading-none font-light text-cloud">
+        <section
+          aria-labelledby="preparo"
+          className="rounded-xl bg-soft-paper p-4 shadow-subtle sm:p-5"
+        >
+          <h2 id="preparo" className="text-base font-medium">
             Modo de preparo
           </h2>
-          <ol className="mt-8 space-y-8">
-            {recipe.steps.map((step, i) => {
-              if (step.endsWith(":")) {
-                return (
-                  <li key={i} className="label-mono pt-2 text-white">
-                    {step.slice(0, -1)}
-                  </li>
-                );
-              }
-              return (
-                <li key={i} className="grid grid-cols-[44px_1fr] gap-3 sm:grid-cols-[56px_1fr]">
-                  <span className="font-mono text-sm font-medium text-ash tabular-nums">
-                    {String(stepNumbers[i]).padStart(2, "0")}
-                  </span>
-                  <p className="text-[17px] leading-[1.7] text-cloud/90">{step}</p>
+          <ol className="mt-4 space-y-4">
+            {recipe.steps.map((step, i) =>
+              step.endsWith(":") ? (
+                <li key={i} className="caption pt-2">
+                  {step.slice(0, -1)}
                 </li>
-              );
-            })}
+              ) : (
+                <li key={i} className="grid grid-cols-[28px_1fr] gap-3">
+                  <span className="inline-flex size-6 items-center justify-center rounded-full border border-warm-mist text-xs font-medium text-ink tabular-nums">
+                    {stepNumbers[i]}
+                  </span>
+                  <p className="text-[15px] leading-relaxed text-ink">{step}</p>
+                </li>
+              )
+            )}
           </ol>
 
           {recipe.notes && (
-            <div className="mt-14 rounded-[30px] bg-silver p-8 text-black">
-              <p className="label-mono text-black/60">Observações</p>
-              <p className="mt-4 text-[17px] leading-relaxed whitespace-pre-line">
+            <div className="mt-6 rounded-lg border border-warm-mist bg-parchment p-4">
+              <p className="caption">Observações</p>
+              <p className="mt-1.5 text-sm leading-relaxed whitespace-pre-line text-ink">
                 {recipe.notes}
               </p>
             </div>
           )}
 
           {recipe.source && (
-            <p className="label-mono mt-8 flex flex-wrap items-center gap-2 text-fog">
+            <p className="mt-4 flex flex-wrap items-center gap-1.5 text-xs text-graphite">
               Fonte:{" "}
               {sourceHost ? (
                 <a
-                  href={recipe.source!}
+                  href={recipe.source}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 break-all text-ash normal-case underline-offset-4 hover:text-white hover:underline"
+                  className="inline-flex items-center gap-1 break-all text-ink underline underline-offset-4 decoration-warm-mist hover:decoration-ink"
                 >
                   {sourceHost}
                   <ExternalLink className="size-3" />
                 </a>
               ) : (
-                <span className="text-ash normal-case">{recipe.source}</span>
+                <span className="text-ink">{recipe.source}</span>
               )}
             </p>
           )}

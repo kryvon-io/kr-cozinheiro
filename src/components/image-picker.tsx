@@ -77,14 +77,14 @@ export function ImagePicker({
       />
 
       {preview ? (
-        <div className="relative aspect-[16/10] overflow-hidden rounded-[16px] bg-graphite">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-muted">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={preview} alt="Foto da receita" className="h-full w-full object-cover" />
-          <div className="absolute right-3 bottom-3 flex gap-2">
+          <div className="absolute right-3 bottom-3 flex gap-2 [&>button]:bg-parchment">
             <Button
               type="button"
               size="sm"
-              variant="glass"
+              variant="outline"
               onClick={() => inputRef.current?.click()}
               disabled={busy}
             >
@@ -93,7 +93,7 @@ export function ImagePicker({
             <Button
               type="button"
               size="sm"
-              variant="glass"
+              variant="outline"
               onClick={() => setValue(currentSrc ? "__remove__" : "")}
               disabled={busy}
             >
@@ -106,14 +106,14 @@ export function ImagePicker({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={busy}
-          className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-3 rounded-[16px] border border-dashed border-white/20 bg-black text-ash transition-colors duration-200 hover:border-white/40 hover:text-white"
+          className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-warm-mist bg-soft-paper text-graphite transition-colors duration-150 hover:border-ash hover:text-ink"
         >
           {busy ? (
-            <LoaderCircle className="size-7 animate-spin" strokeWidth={1.25} />
+            <LoaderCircle className="size-6 animate-spin" strokeWidth={1.5} />
           ) : (
-            <ImagePlus className="size-7" strokeWidth={1.25} />
+            <ImagePlus className="size-6" strokeWidth={1.5} />
           )}
-          <span className="label-mono">
+          <span className="text-sm">
             {busy ? "Processando…" : "Adicionar foto (opcional)"}
           </span>
         </button>

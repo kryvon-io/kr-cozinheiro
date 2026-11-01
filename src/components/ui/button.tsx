@@ -5,27 +5,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg text-[15px] font-normal transition-[background-color,color,border-color,opacity] duration-200 ease-out outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap text-sm font-normal transition-colors duration-150 outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-white/85",
+        /* Ação preenchida: fundo Ink, texto Parchment */
+        default: "rounded-lg bg-ink text-parchment hover:bg-ink/85",
+        /* Ghost com contorno fino */
         outline:
-          "border border-white/70 bg-transparent text-white hover:bg-white/10",
-        glass:
-          "border border-white/25 bg-white/10 text-white backdrop-blur-xl hover:bg-white/15",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-accent",
-        ghost: "text-muted-foreground hover:bg-white/5 hover:text-white",
+          "rounded-sm border border-warm-mist bg-transparent text-graphite hover:border-ash hover:text-ink",
+        /* Selecionado (teal) */
+        active: "rounded-lg bg-teal text-white hover:bg-teal/90",
+        ghost: "rounded-sm text-graphite hover:bg-ink/[0.05] hover:text-ink",
         destructive:
-          "bg-destructive text-black hover:bg-destructive/85 focus-visible:ring-destructive/40",
-        link: "text-white underline-offset-4 hover:underline",
+          "rounded-lg bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/30",
+        link: "text-ink underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-11 px-[18px]",
-        sm: "h-9 px-3 text-sm",
-        lg: "h-12 px-6 text-base",
-        icon: "size-11",
-        "icon-sm": "size-9",
+        default: "h-10 px-3.5",
+        sm: "h-8 px-3",
+        lg: "h-11 px-4 text-base",
+        icon: "size-10",
+        "icon-sm": "size-8",
       },
     },
     defaultVariants: {
